@@ -46,7 +46,8 @@ import timber.log.Timber
 // the pokemon details
 @Composable
 fun PokemonListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     Surface(
         color = MaterialTheme.colors.background,
@@ -66,8 +67,9 @@ fun PokemonListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-            ) {
+            ) { query ->
                 // Function that will put here when we search something
+                viewModel.searchPokemonList(query)
             }
             Spacer(modifier = Modifier.height(16.dp))
             PokemonList(navController = navController)
@@ -105,7 +107,7 @@ fun SearchBar(
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
                     // Hide the hint
-                    isHintDisplayed = !it.isFocused
+                    isHintDisplayed = !it.isFocused && text.isNotEmpty()
                 }
         )
         if (isHintDisplayed) {
@@ -128,6 +130,7 @@ fun PokemonList(
     val endReached by remember { viewModel.endReached }
     val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
+    val isSearching by remember { viewModel.isSearching }
 
     // Lazy Column
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
@@ -137,7 +140,7 @@ fun PokemonList(
             pokemonList.size / 2 + 1
         }
         items(itemCount) { index ->
-            if (index >= itemCount - 1 && !endReached) {
+            if (index >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
                 // Then paginate
                 viewModel.loadPokemonPaginated()
             }
