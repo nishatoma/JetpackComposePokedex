@@ -19,7 +19,7 @@ class PokemonRepository @Inject constructor(
         val response = try {
             api.getPokemonList(limit = limit, offest = offset)
         } catch (e: Exception) {
-            return Resource.Error(message = "Could not get the pokemon list: ${e.localizedMessage}")
+            return Resource.Error(message = "Could not get the pokemon list")
         }
         return Resource.Success(response)
     }
@@ -28,7 +28,7 @@ class PokemonRepository @Inject constructor(
         val response = try {
             api.getPokemon(name = name)
         } catch (e: Exception) {
-            return Resource.Error(message = "Could not load the pokemon: ${e.localizedMessage}")
+            return Resource.Error(message = "Could not load the pokemon")
         }
         return Resource.Success(response)
     }

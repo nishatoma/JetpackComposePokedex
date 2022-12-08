@@ -11,13 +11,13 @@ interface PokeApi {
     // Specify the functions in which we will access the routes
     // from our API
 
-    @GET("/pokemon")
+    @GET("pokemon")
     suspend fun getPokemonList(
         @Query("limit") limit: Int,
         @Query("offset") offest: Int
     ): PokemonList
 
-    @GET("/pokemon/{name}")
+    @GET("pokemon/{name}")
     suspend fun getPokemon(
         @Path("name") name: String
     ): Pokemon
