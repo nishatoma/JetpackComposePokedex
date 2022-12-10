@@ -347,6 +347,10 @@ fun PokemonStat(
                 .padding(horizontal = 8.dp)
         ) {
             Text(
+                text = statName,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
                 text = (currPercent.value * statMaxValue).toInt().toString(),
                 fontWeight = FontWeight.Bold
             )
